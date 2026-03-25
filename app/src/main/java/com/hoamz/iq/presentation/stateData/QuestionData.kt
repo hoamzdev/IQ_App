@@ -1,4 +1,4 @@
-package com.hoamz.iq.presentation.state
+package com.hoamz.iq.presentation.stateData
 
 import com.hoamz.iq.domain.entities.Question
 

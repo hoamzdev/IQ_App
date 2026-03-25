@@ -88,7 +88,13 @@ fun PlayScreen(
     val context = LocalContext.current
     val questionsData by playViewModel.questions.collectAsState()
 
-    var indexQuestion by remember { mutableIntStateOf(playViewModel.getLevel()) }
+    var indexQuestion by remember {
+        mutableIntStateOf(
+        if(playViewModel.levelSelected != -1) playViewModel.levelSelected
+                else playViewModel.getLevel()
+        )
+    }
+
     var isWrong by remember { mutableStateOf(false) }
     var isCorrect by remember { mutableStateOf(false) }
 
@@ -164,7 +170,7 @@ fun PlayScreen(
                             .fillMaxWidth()
                             .align(alignment = Alignment.BottomCenter)
                             .padding(bottom = 50.dp),
-                        text = "Wrong. Try again!",
+                        text = "Wrong.Try again!",
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 18.sp)
                     )
@@ -236,7 +242,9 @@ fun PlayScreen(
                         isCorrect = false
                         if (indexQuestion < 99) {
                             indexQuestion++
-                            playViewModel.saveLevel(indexQuestion)
+                            if(indexQuestion > playViewModel.getLevel()){
+                                playViewModel.saveLevel(indexQuestion)
+                            }
                         }
                     },
                     elevation = ButtonDefaults.buttonElevation(2.dp),

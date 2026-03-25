@@ -6,4 +6,5 @@ package com.hoamz.iq.ui.screen.level
 
 sealed class LevelNavState {
     object ToWelComeScreen : LevelNavState()
+    object ToPlayScreen : LevelNavState()
 }

@@ -21,7 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,6 +50,7 @@ fun LevelScreen(
 ) {
 
     val currentLevel = remember { levelViewModel.getLevel() }
+    var levelSelected by remember { mutableIntStateOf(-1) }
 
     BackHandler {
         levelViewModel.onNavToWelcomeScreen()
@@ -57,6 +60,7 @@ fun LevelScreen(
         levelViewModel.levelsNavState.collect { navState ->
             when(navState){
                 is LevelNavState.ToWelComeScreen -> mainRouter.onBackToWelcomeScreen()
+                is LevelNavState.ToPlayScreen -> mainRouter.onNavToPlayScreen(levelSelected)
             }
         }
     }
@@ -118,7 +122,8 @@ fun LevelScreen(
                         fontW = if(index < currentLevel) FontWeight.Bold else FontWeight.Normal,
                         fontSize = 13.sp
                     ) {
-
+                        levelSelected = index
+                        levelViewModel.onNavToPlayScreen()
                     }
                 }
             }

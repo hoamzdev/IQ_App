@@ -14,8 +14,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.hoamz.iq.presentation.ui.screen.level.LevelScreen
 import com.hoamz.iq.presentation.ui.screen.play.PlayScreen
 import com.hoamz.iq.presentation.ui.screen.play.PlayViewModel
@@ -44,7 +46,15 @@ fun MainGraph(
                 mainRouter = mainRouter
             )
         }
-        composable(route = Page.PlayScreen.router) {
+        composable(
+            route = Page.PlayScreen.router,
+            arguments = listOf(
+                navArgument("level"){
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )
+        ) {
             val playViewModel : PlayViewModel = hiltViewModel()
             PlayScreen(
                 mainRouter = mainRouter,

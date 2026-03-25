@@ -1,16 +1,15 @@
 package com.hoamz.iq.presentation.ui.screen.play
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.util.Log
-import com.hoamz.iq.domain.entities.Question
 import com.hoamz.iq.domain.common.onError
 import com.hoamz.iq.domain.common.onSuccess
 import com.hoamz.iq.domain.usecase.GetLevelCurrent
 import com.hoamz.iq.domain.usecase.GetQuestions
 import com.hoamz.iq.domain.usecase.SaveLevelCurrent
-import com.hoamz.iq.presentation.state.QuestionData
-import com.hoamz.iq.presentation.ui.screen.welcome.WelcomeNavState
+import com.hoamz.iq.presentation.stateData.QuestionData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,8 +26,13 @@ import javax.inject.Inject
 class PlayViewModel @Inject constructor(
     private val getQuestions: GetQuestions,
     private val saveLevelCurrent: SaveLevelCurrent,
-    private val getLevelCurrent: GetLevelCurrent
+    private val getLevelCurrent: GetLevelCurrent,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel(){
+
+    //get currentLevel
+    val levelSelected : Int = savedStateHandle["level"] ?: -1
+
     private val _playNavState = MutableSharedFlow<PlayNavState>()
     val playNavState = _playNavState.asSharedFlow()
 

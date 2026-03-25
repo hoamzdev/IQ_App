@@ -27,5 +27,11 @@ class LevelViewModel @Inject constructor(
         }
     }
 
+    fun onNavToPlayScreen(){
+        viewModelScope.launch {
+            _levelsNavState.emit(LevelNavState.ToPlayScreen)
+        }
+    }
+
     fun getLevel() = getLevelCurrent()
 }

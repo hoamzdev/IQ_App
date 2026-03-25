@@ -29,6 +29,15 @@ class MainRouter(
         }
     }
 
+    //overloading
+    fun onNavToPlayScreen(level : Int){
+        navHostController.navigate(route = Page.PlayScreen.onNavToPlayScreen(level)){
+            popUpTo(navHostController.graph.startDestinationId)
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     fun onNavToLevelScreen(){
         navHostController.navigate(route = Page.LevelScreen.router){
             launchSingleTop = true
